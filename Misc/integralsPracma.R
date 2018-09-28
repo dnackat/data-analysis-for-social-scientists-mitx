@@ -46,6 +46,20 @@ ymax <- 1
 
 integral2(f5, xmin, xmax, ymin, ymax)$Q
 
+#6
+f6 <- function(x) (6/5)*(x + (1/3))
+xmin <- 0.9
+xmax <- 1
+
+integral(f6, xmin, xmax)
+
+#7
+f7 <- function(y) (6/5)*((1/2) + y^2)
+ymin <- 0.9
+ymax <- 1
+
+integral(f7, ymin, ymax)
+
 # 3D plot
 library(plot3D)
 library(utils)
@@ -59,14 +73,16 @@ persp3D(x,y,z,xlab="X variable",ylab="Y variable",xlim=c(0,1),main="Plotting joi
 
 # CFD plot
 library(ggplot2)
+library(dplyr)
+library(tidyr)
 
-sp_volume <- seq(0, 1, length=100)
-fx <- (6/5)*(sp_volume + (1/3))
-fy <- (6/5)*((1/2) + sp_volume^2)
+x <- seq(0, 1, length=100)
+fx <- (6/5)*((x^2/2) + (x/3))
+fy <- (6/5)*((x^3/3) + (x/2))
 
-data_x <- data.frame(cbind(sp_volume, f))
-data_y <- data.frame(cbind(sp_volume, f))
+data_x <- data.frame(cbind(x, f=fx))
+data_y <- data.frame(cbind(x, f=fy))
 
-ggplot(data_x, aes("f")) +
-  stat_ecdf(data_x, aes("f"), color="darkblue") +
-  stat_ecdf(data_y, aes("f"), color="darkred")
+ggplot(data_x, aes(x=x, y=f)) +
+  stat_ecdf(data=data_x, aes(x=x, y=f), color="darkblue") +
+  stat_ecdf(data=data_y, aes(x=x, y=f), color="darkred")
