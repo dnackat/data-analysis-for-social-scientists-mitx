@@ -4,7 +4,7 @@ rm(list = ls())
 library("mvtnorm")
 
 real_theta <- 5
-sample_size <- 100
+sample_size <- 1000
 number_simulations <- 100000
 
 simulations1 <- matrix(runif(sample_size*number_simulations, max = real_theta), 
