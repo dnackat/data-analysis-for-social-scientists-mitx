@@ -22,5 +22,5 @@ p2$counts = p2$density
 
 pdf("histogram1.pdf")
 plot( p1, col=rgb(1,0,0,1/4), xlim = range, xlab = "values", ylab = "density")
-#plot( p2, col=rgb(0,0,1,1/4), add = TRUE)  
+plot( p2, col=rgb(0,0,1,1/4), add = TRUE)  
 dev.off()
