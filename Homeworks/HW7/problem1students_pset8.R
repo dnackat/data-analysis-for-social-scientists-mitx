@@ -80,3 +80,13 @@ sigma_sq = (49*s_c + 51*s_t)/100
 
 # Least sample size
 N = ((qnorm(1-beta) + qnorm(1-(alpha/2)))^2)/((tau^2/sigma_sq)*gamma*(1-gamma))
+
+# Kernel regression
+library(ggplot2)
+library(np)
+
+attach(schools)
+scores <- npreg(xdat=pctpostwritten, ydat= open, bws=0.04,bandwidth.compute=FALSE)
+plot(scores)
+
+
