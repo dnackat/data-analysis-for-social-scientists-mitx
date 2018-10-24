@@ -46,19 +46,27 @@ sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
 
 #Question 7 - 8
 #---------------------------------------------------
-#Printing the ATE
+#Printing the Average Treatment Effect
 ate <- actual_stat
 ate
 
+# Control and treatment means
 control_mean <- sum(schools$control*schools$open)/sum(schools$control)
 treatment_mean <- sum(schools$treatment*schools$open)/sum(schools$treatment)
 
+# Sample sd
 s_c <- (1/(sum(schools$control)-1))*sum(((schools$open-control_mean)*schools$control)^2)
 s_t <- (1/(sum(schools$treatment)-1))*sum(((schools$open-treatment_mean)*schools$treatment)^2)
 
+# Neyman std devn
 Vneyman <- (s_c/sum(schools$control) + s_t/sum(schools$treatment))
 print(sqrt(Vneyman))
 print(actual_stat/sqrt(Vneyman))
 
+# 95% CI
 print(actual_stat-1.96*sqrt(Vneyman))
 print(actual_stat+1.96*sqrt(Vneyman))
+
+# Associated treatment effect (2 sided test)
+p = 2*(1-pnorm(actual_stat/sqrt(Vneyman)))
+print(p)
