@@ -90,7 +90,12 @@ attach(schools)
 scores <- npreg(xdat=open, ydat=pctpostwritten, bws=0.04,bandwidth.compute=FALSE)
 plot(scores)
 
+# FOSD test
 data_treatment <- filter(schools, treatment == 1)
-data_control <- 
-ggplot(data = schools, aes(x = open, y = pctpostwritten)) + 
-  stat_ecdf()
+data_control <- filter(schools, control == 1)
+  
+ggplot(data = data_treatment, aes(x = open, y = pctpostwritten)) + 
+  stat_ecdf(data = data_treatment, aes(x = open, y = pctpostwritten), color = "darkblue") +
+  stat_ecdf(data = data_control, aes(x = open, y = pctpostwritten), color = "red") +
+  xlab("Percentage school open time") +
+  ylab("Mean scores")
