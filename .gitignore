@@ -3,4 +3,5 @@
 *.csv
 *.jpg
 *.png
-
+*RData*
+*Rhistory*
