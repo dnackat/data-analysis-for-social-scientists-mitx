@@ -41,7 +41,7 @@ for(i in 1:100) {
 }
 
 schools$control = 1-schools$treatment
-actual_stat <- sum(schools$treatment*schools$open)/sum(schools$treatment) - sum(schools$control*schools$open)/sum(schools$control)
+actual_stat <- sum(schools$treatment*schools$open*0.5)/sum(schools$treatment) - sum(schools$control*schools$open*0.5)/sum(schools$control)
 sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
 
 #Question 7 - 8
@@ -54,7 +54,7 @@ ate
 control_mean <- sum(schools$control*schools$open)/sum(schools$control)
 treatment_mean <- sum(schools$treatment*schools$open)/sum(schools$treatment)
 
-# Sample sd
+# Sample var
 s_c <- (1/(sum(schools$control)-1))*sum(((schools$open-control_mean)*schools$control)^2)
 s_t <- (1/(sum(schools$treatment)-1))*sum(((schools$open-treatment_mean)*schools$treatment)^2)
 
@@ -70,3 +70,13 @@ print(actual_stat+1.96*sqrt(Vneyman))
 # Associated treatment effect (2 sided test)
 p = 2*(1-pnorm(actual_stat/sqrt(Vneyman)))
 print(p)
+
+# Required sample size for half the incentive and power of 90% and significance level of 5%
+gamma = 0.5
+alpha = 0.05
+beta = 0.1
+tau = ate
+sigma_sq = (49*s_c + 51*s_t)/100
+
+# Least sample size
+N = ((qnorm(1-beta) + qnorm(1-(alpha/2)))^2)/((tau^2/sigma_sq)*gamma*(1-gamma))
