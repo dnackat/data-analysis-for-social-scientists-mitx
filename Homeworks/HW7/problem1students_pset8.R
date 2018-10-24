@@ -84,9 +84,13 @@ N = ((qnorm(1-beta) + qnorm(1-(alpha/2)))^2)/((tau^2/sigma_sq)*gamma*(1-gamma))
 # Kernel regression
 library(ggplot2)
 library(np)
+library(tidyverse)
 
 attach(schools)
-scores <- npreg(xdat=pctpostwritten, ydat= open, bws=0.04,bandwidth.compute=FALSE)
+scores <- npreg(xdat=open, ydat=pctpostwritten, bws=0.04,bandwidth.compute=FALSE)
 plot(scores)
 
-
+data_treatment <- filter(schools, treatment == 1)
+data_control <- 
+ggplot(data = schools, aes(x = open, y = pctpostwritten)) + 
+  stat_ecdf()
