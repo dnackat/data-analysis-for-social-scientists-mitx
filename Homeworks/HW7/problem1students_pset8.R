@@ -41,7 +41,7 @@ for(i in 1:100) {
 }
 
 schools$control = 1-schools$treatment
-actual_stat <- sum(schools$treatment*schools$open*0.5)/sum(schools$treatment) - sum(schools$control*schools$open*0.5)/sum(schools$control)
+actual_stat <- sum(schools$treatment*schools$open)/sum(schools$treatment) - sum(schools$control*schools$open)/sum(schools$control)
 sum(abs(simul_stat) >= actual_stat)/NROW(simul_stat)
 
 #Question 7 - 8
@@ -60,22 +60,22 @@ s_t <- (1/(sum(schools$treatment)-1))*sum(((schools$open-treatment_mean)*schools
 
 # Neyman std devn
 Vneyman <- (s_c/sum(schools$control) + s_t/sum(schools$treatment))
-print(sqrt(Vneyman))
-print(actual_stat/sqrt(Vneyman))
+std_err <- sqrt(Vneyman)
+print(actual_stat/std_err)
 
 # 95% CI
-print(actual_stat-1.96*sqrt(Vneyman))
-print(actual_stat+1.96*sqrt(Vneyman))
+print(actual_stat-1.96*std_err)
+print(actual_stat+1.96*std_err)
 
 # Associated treatment effect (2 sided test)
-p = 2*(1-pnorm(actual_stat/sqrt(Vneyman)))
+p = 2*(1-pnorm(actual_stat/std_err))
 print(p)
 
 # Required sample size for half the incentive and power of 90% and significance level of 5%
 gamma = 0.5
 alpha = 0.05
 beta = 0.1
-tau = ate
+tau = ate*0.5 # For half the incentive case
 sigma_sq = (49*s_c + 51*s_t)/100
 
 # Least sample size
