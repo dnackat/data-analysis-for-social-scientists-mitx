@@ -44,3 +44,11 @@ n <- nrow(hw_data)
 k_1 <- 2
 T_stat <- ((ssr_rest - ssr_unrest)/r)/(ssr_unrest/(n-k_1))
 print(T_stat)
+
+# Mincer equations
+fit4 <- lm(lwage ~ yrs_school + ttl_exp, data = hw_data)
+b_0 <- 0.33694422
+b_1 <- 0.07914776
+b_2 <- 0.03955915
+SSR <- sum(hw_data$lwage - )
+
