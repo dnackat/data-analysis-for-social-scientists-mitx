@@ -50,5 +50,13 @@ fit4 <- lm(lwage ~ yrs_school + ttl_exp, data = hw_data)
 b_0 <- 0.33694422
 b_1 <- 0.07914776
 b_2 <- 0.03955915
-SSR <- sum(hw_data$lwage - )
+SSR <- sum((hw_data$lwage - b_0 - b_1*hw_data$yrs_school - b_2*hw_data$ttl_exp)**2)
+mean_lwage <- sum(hw_data$lwage)/nrow(hw_data)
+SST <- sum((hw_data$lwage - mean_lwage)**2)
+R_2 <- 1 - (SSR/SST)
 
+# Restricted model with b_2 = 2*b_1
+fit5 <- lm(lwage ~ I(yrs_school + 2*ttl_exp), data = hw_data)
+
+# Compare
+anova(fit4, fit5)
