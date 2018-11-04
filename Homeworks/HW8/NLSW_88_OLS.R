@@ -28,7 +28,18 @@ y_black <- sum(hw_data$black*hw_data$lwage)/sum(hw_data$black)
 beta_0 <- y_other
 beta_1 <- y_black - y_other
 
+
 # Test the hypothesis that beta_1 is zero. Run the resticted model:
-n_obs <- nrow(hw_data)
+fit3 <-lm(lwage ~ 1, data = hw_data)
+var.test(fit2, fit3, conf.level = 0.99)
+beta_0_rest <- 1.869
 
 
+# Check test statistic to confirm
+ssr_unrest <- sum((hw_data$lwage - beta_0 - beta_1*hw_data$black)**2)
+ssr_rest <- sum((hw_data$lwage - beta_0_rest)**2)
+r <- 1
+n <- nrow(hw_data)
+k_1 <- 2
+T_stat <- ((ssr_rest - ssr_unrest)/r)/(ssr_unrest/(n-k_1))
+print(T_stat)
