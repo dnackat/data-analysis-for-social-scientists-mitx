@@ -10,7 +10,7 @@ hw_data <- as.data.frame(read.csv("nlsw88.csv"))
 
 # The model
 fit <- lm(lwage ~ yrs_school, data = hw_data)
-print(fit)
+summary(fit)
 
 # 90% CI for parameters
 confint(fit, level=0.90)
@@ -20,7 +20,7 @@ sum(residuals(fit))
 
 # Next model
 fit2 <- lm(lwage ~ black, data = hw_data)
-print(fit2)
+summary(fit2)
 
 # Analytical calculation as a check
 y_other <- sum((1-hw_data$black)*hw_data$lwage)/sum(1-hw_data$black)
@@ -31,6 +31,7 @@ beta_1 <- y_black - y_other
 
 # Test the hypothesis that beta_1 is zero. Run the resticted model:
 fit3 <-lm(lwage ~ 1, data = hw_data)
+summary(fit3)
 
 # Compare the two fits
 anova(fit2, fit3)
@@ -47,6 +48,7 @@ print(T_stat)
 
 # Mincer equations
 fit4 <- lm(lwage ~ yrs_school + ttl_exp, data = hw_data)
+summary(fit4)
 b_0 <- 0.33694422
 b_1 <- 0.07914776
 b_2 <- 0.03955915
@@ -57,6 +59,11 @@ R_2 <- 1 - (SSR/SST)
 
 # Restricted model with b_2 = 2*b_1
 fit5 <- lm(lwage ~ I(yrs_school + 2*ttl_exp), data = hw_data)
+summary(fit5)
 
 # Compare
 anova(fit4, fit5)
+
+# Plot the fit
+plot(hw_data$ttl_exp, hw_data$lwage)
+abline(fit, color = "red")
