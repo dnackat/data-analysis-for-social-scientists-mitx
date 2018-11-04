@@ -27,3 +27,8 @@ y_other <- sum((1-hw_data$black)*hw_data$lwage)/sum(1-hw_data$black)
 y_black <- sum(hw_data$black*hw_data$lwage)/sum(hw_data$black)
 beta_0 <- y_other
 beta_1 <- y_black - y_other
+
+# Test the hypothesis that beta_1 is zero. Run the resticted model:
+n_obs <- nrow(hw_data)
+
+
