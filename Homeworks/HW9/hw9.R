@@ -30,3 +30,34 @@ summary(lm_wage_st)
 hw9_data$diff_ft <- hw9_data$empft2 - hw9_data$empft
 lin_mod <- lm(formula = diff_ft ~ state, data = hw9_data)
 summary(lin_mod)
+
+# Part B: Replicating results of the David S. Lee's 2008 paper - 
+# "The Electoral Advantage to Incumbency and Voters' Valuation of Politicians 
+# Experience: A Regression Discontinuity Analysis of Elections to the U.S. Houses"
+
+# Preliminaries
+rm(list = ls())
+library(tidyverse)
+library(rdd)
+
+# Import the dataset
+hw9_data2 <- as.data.frame(read.csv("indiv_final.csv"))
+
+# Create a variable to indicate whether the party of the candidate is the same as the incumbent
+hw9_data2$incum_paty <- as.numeric(hw9_data2$difshare > 0)
+incum_proportion <- sum(hw9_data2$incum_paty)/nrow(hw9_data2)
+
+# Check for discontinuities
+DCdensity(hw9_data2$difshare, verbose = TRUE, htest = TRUE)
+
+# Add extra variables to run some linear models
+hw9_data2$difshare_sq <- (hw9_data2$difshare)^2
+hw9_data2$difshare_cub <- (hw9_data2$difshare)^3
+
+# Run some linear models to comapre
+lm1 <- lm(formula = myoutcomenext ~ incum_paty, data = hw9_data2)
+summary(lm1)
+lm2 <- lm(formula = myoutcomenext ~ incum_paty + difshare, data = hw9_data2)
+summary(lm2)
+lm3 <- lm(formula = myoutcomenext ~ incum_paty + difshare + incum_party*difshare, data = hw9_data2)
+summary(lm3)
