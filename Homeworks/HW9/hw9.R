@@ -54,10 +54,24 @@ DCdensity(hw9_data2$difshare, verbose = TRUE, htest = TRUE)
 hw9_data2$difshare_sq <- (hw9_data2$difshare)^2
 hw9_data2$difshare_cub <- (hw9_data2$difshare)^3
 
+# Keep only a subset of the adata that falls within 50 percentage points
+hw9_data2_50ppt <- filter(hw9_data2, difshare <= 0.50, difshare >= -0.50)
+
 # Run some linear models to comapre
-lm1 <- lm(formula = myoutcomenext ~ incum_paty, data = hw9_data2)
+lm1 <- lm(formula = myoutcomenext ~ incum_paty, data = hw9_data2_50ppt)
 summary(lm1)
-lm2 <- lm(formula = myoutcomenext ~ incum_paty + difshare, data = hw9_data2)
+lm2 <- lm(formula = myoutcomenext ~ incum_paty + difshare, data = hw9_data2_50ppt)
 summary(lm2)
-lm3 <- lm(formula = myoutcomenext ~ incum_paty + difshare + incum_party*difshare, data = hw9_data2)
+lm3 <- lm(formula = myoutcomenext ~ incum_paty + difshare + incum_paty*difshare, data = hw9_data2_50ppt)
 summary(lm3)
+lm4 <- lm(formula = myoutcomenext ~ incum_paty + difshare + difshare_sq, data = hw9_data2_50ppt)
+summary(lm4)
+lm5 <- lm(formula = myoutcomenext ~ incum_paty + difshare + difshare_sq + incum_paty*difshare + incum_paty*difshare_sq, data = hw9_data2_50ppt)
+summary(lm5)
+lm6 <- lm(formula = myoutcomenext ~ incum_paty + difshare + difshare_sq + difshare_cub, data = hw9_data2_50ppt)
+summary(lm6)
+lm7 <- lm(formula = myoutcomenext ~ incum_paty + difshare + difshare_sq + difshare_cub + incum_paty*difshare + incum_paty*difshare_sq + incum_paty*difshare_cub, data = hw9_data2_50ppt)
+summary(lm7)
+
+# Non-parametric point estimate of the effect on reelection
+RDestimate(myoutcomenext ~ difshare, data = hw9_data2_50ppt, verbose = TRUE)
