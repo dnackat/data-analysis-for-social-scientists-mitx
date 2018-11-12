@@ -60,6 +60,13 @@ ymax <- 1
 
 integral(f7, ymin, ymax)
 
+#8
+f8 <- function(y) (y)*(exp(-4*y))
+ymin <- 0
+ymax <- Inf
+
+integral(f8, ymin, ymax)
+
 # 3D plot
 library(plot3D)
 library(utils)
