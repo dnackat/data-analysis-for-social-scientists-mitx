@@ -67,6 +67,21 @@ ymax <- Inf
 
 integral(f8, ymin, ymax)
 
+#9
+f9 <- function(y) 2*(1/(sqrt(2)*sqrt(2*pi)))*(y)*(exp(-(y^2)/4))
+ymin <- 0
+ymax <- Inf
+
+integral(f9, ymin, ymax)
+
+#10
+a = 2
+f10 <- function(y) exp(a)*(a/(y^2))*(exp(-a/y))
+ymin <- 0
+ymax <- 1
+
+integral(f10, ymin, ymax)
+
 # 3D plot
 library(plot3D)
 library(utils)
