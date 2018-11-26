@@ -4,6 +4,7 @@
 # Preliminaries
 rm(list = ls())
 library(tidyverse)
+library(AER)
 
 # Load the dataset
 data_hw10 <- as.data.frame(read.csv("census80.csv"))
@@ -12,23 +13,39 @@ data_hw10 <- as.data.frame(read.csv("census80.csv"))
 summary(data_hw10)
 
 # Instrumental variable for whether there was multiple pregnancy during the 2nd pregnancy
-data_hw10$mult2nd <- as.numeric(data_hw10$ageq2nd == data_hw10$ageq3rd)
+data_hw10$temp[data_hw10$ageq2nd == data_hw10$ageq3rd] <- 1
+data_hw10$multiple <- 0
+data_hw10$multiple[data_hw10$temp == 1] <- 1
 
 # Proportion of such households
-sum(data_hw10$mult2nd, na.rm = TRUE)/nrow(data_hw10)
+summary(data_hw10$multiple)
 
 # Instrumental variable for whether the first and second child have the same sex
-data_hw10$sex1st2nd <- as.numeric(data_hw10$sex1st == data_hw10$sex2nd)
+data_hw10$temp <- (data_hw10$sex1st == data_hw10$sex2nd)
+data_hw10$samesex[data_hw10$temp == FALSE] <- 0
+data_hw10$samesex[data_hw10$temp == TRUE] <- 1
 
 # Proportion of such households
-sum(data_hw10$sex1st2nd, na.rm = TRUE)/nrow(data_hw10)
+summary(data_hw10$samesex)
 
 # Run an OLS model for labor supply: 
-ols1 <- lm(formula = workedm ~ I(numberkids - 1) + blackm + hispm + othracem, data = data_hw10)
+data_hw10$third <- 0
+data_hw10$third[data_hw10$numberkids == 3] <- 1
+
+ols1 <- lm(formula = workedm ~ third + blackm + hispm + othracem, data = data_hw10)
 summary(ols1)
 
-ols2 <- lm(formula = weeksm ~ I(numberkids - 1) + blackm + hispm + othracem, data = data_hw10)
+ols2 <- lm(formula = weeksm ~ third + blackm + hispm + othracem, data = data_hw10)
 summary(ols2)
 
-# 
+# Run regression for the first stage separately using the two IV's 
+ols_multpreg <- lm(formula = third ~ multiple + blackm + hispm + othracem, data = data_hw10)
+summary(ols_multpreg)
+
+ols_sex1st2nd <- lm(formula = third ~ samesex + blackm + hispm + othracem, data = data_hw10)
+summary(ols_sex1st2nd)
+
+# Run the IV regression
+reg_mult_iv <- ivreg()
+
 
