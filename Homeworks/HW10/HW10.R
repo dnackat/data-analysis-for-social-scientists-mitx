@@ -45,7 +45,16 @@ summary(ols_multpreg)
 ols_sex1st2nd <- lm(formula = third ~ samesex + blackm + hispm + othracem, data = data_hw10)
 summary(ols_sex1st2nd)
 
-# Run the IV regression
-reg_mult_iv <- ivreg()
+# Run IV regression
+ivreg_mult <- ivreg(formula = workedm ~ third + blackm + hispm + othracem | blackm + hispm + othracem + multiple, data = data_hw10)
+summary(ivreg_mult) # Dep. var = whether mother works, instr. var. = multiple 2nd pregnancy
 
+ivreg_mult_weeks <- ivreg(formula = weeksm ~ third + blackm + hispm + othracem | blackm + hispm + othracem + multiple, data = data_hw10)
+summary(ivreg_mult_weeks) # Dep. var = Number of weeks mother works, instr. var. = multiple 2nd pregnancy
+
+ivreg_samesex <- ivreg(formula = workedm ~ third + blackm + hispm + othracem | blackm + hispm + othracem + samesex, data = data_hw10)
+summary(ivreg_samesex) # Dep. var = whether mother works, instr. var. = whether sex of 1st and 2nd kid the same
+
+ivreg_samesex_weeks <- ivreg(formula = weeksm ~ third + blackm + hispm + othracem | blackm + hispm + othracem + samesex, data = data_hw10)
+summary(ivreg_samesex_weeks) # Dep. var = Number of weeks mother works, instr. var. = whether sex of 1st and 2nd kid the same
 
