@@ -26,3 +26,19 @@ prob_5_4 <- (nCk(3,3)*((0.7)^3))*(nCk(3,2)*((0.7)^2)*0.3)
 
 prob_1_win <- prob_3_2 + prob_4_2 + prob_4_3 + prob_5_2 + prob_5_3 + prob_5_4
 print(prob_1_win)
+
+# Q3: score for 90 percentile
+qnorm(0.9, mean = 70, sd = 20)
+
+# Q4: CLT simulation
+df5 <- data.frame()
+nsims <- 10000
+for (i in 1:nsims) {
+  df5 <- rbind(df5, rexp(5, rate = 2))
+}
+
+df5$mean <- rowMeans(df5, na.rm = TRUE, dims = 1) # Add means column
+
+# Plot a histogram of means
+ggplot(data = df5, aes(mean)) +
+  geom_histogram(aes(mean, ..density..), binwidth = 0.01, fill = "darkblue")
