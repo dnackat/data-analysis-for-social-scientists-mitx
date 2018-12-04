@@ -42,3 +42,49 @@ df5$mean <- rowMeans(df5, na.rm = TRUE, dims = 1) # Add means column
 # Plot a histogram of means
 ggplot(data = df5, aes(mean)) +
   geom_histogram(aes(mean, ..density..), binwidth = 0.01, fill = "darkblue")
+
+# Repeat this process with n = 1, 10, and 30.Compare these.
+df1 <- data.frame()
+nsims <- 10000
+for (i in 1:nsims) {
+  df1 <- rbind(df1, rexp(1, rate = 2))
+}
+
+df1$mean <- rowMeans(df1, na.rm = TRUE, dims = 1)
+
+# n = 10
+df10 <- data.frame()
+nsims <- 10000
+for (i in 1:nsims) {
+  df10 <- rbind(df10, rexp(10, rate = 2))
+}
+
+df10$mean <- rowMeans(df10, na.rm = TRUE, dims = 1)
+
+# n = 30
+df30 <- data.frame()
+nsims <- 10000
+for (i in 1:nsims) {
+  df30 <- rbind(df30, rexp(30, rate = 2))
+}
+
+df30$mean <- rowMeans(df30, na.rm = TRUE, dims = 1)
+
+# Plot all of these in the same graph
+ggplot(data = df5, aes(mean)) +
+  geom_histogram(data = df1, aes(mean, ..density..), binwidth = 0.01, color = "darkblue") +
+  geom_histogram(data = df5, aes(mean, ..density..), binwidth = 0.01, color = "darkred") +
+  geom_histogram(data = df10, aes(mean, ..density..), binwidth = 0.01, color = "darkgreen") +
+  geom_histogram(data = df30, aes(mean, ..density..), binwidth = 0.01, color = "black")
+
+# Compare sample means
+mean_1 <- mean(df1$mean)
+mean_5 <- mean(df5$mean)
+mean_10 <- mean(df10$mean)
+mean_30 <- mean(df30$mean)
+
+# Compare standard deviations
+sd_1 <- sd(df1$mean)
+sd_5 <- sd(df5$mean)
+sd_10 <- sd(df10$mean)
+sd_30 <- sd(df30$mean)
