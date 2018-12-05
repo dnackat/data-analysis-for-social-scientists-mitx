@@ -47,6 +47,6 @@ v_neyman <- sqrt((s_t_2/n_t) + (s_c_2/n_c))
 t_stat <- ate_pct_missing/v_neyman
 
 # The associated p-value
-p_val <- 2*(1-pnorm(0.7538))
+p_val <- 2*(1-pnorm(abs(t_stat)))
 
 # p_val > 0.05 (95% CI), so we fail to reject the null
