@@ -82,6 +82,13 @@ ymax <- 1
 
 integral(f10, ymin, ymax)
 
+#11
+f11 <- function(y) (1/(y^2))*(y-log(2))^2
+ymin <- 1/2
+ymax <- 1
+
+integral(f11, ymin, ymax)
+
 # 3D plot
 library(plot3D)
 library(utils)
