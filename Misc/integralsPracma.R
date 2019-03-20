@@ -89,6 +89,14 @@ ymax <- 1
 
 integral(f11, ymin, ymax)
 
+#12
+b = 2
+f12 <- function(x) (1/(2*b))*x*exp(-abs(x)/b)
+xmin <- -Inf
+xmax <- 0
+
+integral(f12, xmin, xmax)
+
 # 3D plot
 library(plot3D)
 library(utils)
