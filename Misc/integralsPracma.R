@@ -97,6 +97,14 @@ xmax <- 0
 
 integral(f12, xmin, xmax)
 
+#13
+theta = 1
+f13 <- function(x) (x^2/theta^2)*exp(-x^2/(2*theta^2))
+xmin <- 0
+xmax <- Inf
+
+integral(f13, xmin, xmax)
+
 # 3D plot
 library(plot3D)
 library(utils)
