@@ -77,8 +77,11 @@ qqnorm(bimodal)
 qqline(bimodal, col = "blue", lwd = 2)
 
 # Unif QQ
-n = 5
+n = 50
 unif_rv <- runif(n)
+
+# Draw two plots next to each other
+par(mfrow = c(1, 2))
 
 # Draw the histogram
 hist_(unif_rv, main = "Unif. Distribution")
