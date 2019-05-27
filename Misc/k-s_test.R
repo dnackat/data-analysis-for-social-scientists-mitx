@@ -89,3 +89,18 @@ hist_(unif_rv, main = "Unif. Distribution")
 # Draw the Q-Q plot
 qqnorm(unif_rv)
 qqline(unif_rv, col = "blue", lwd = 2)
+
+# Exp vs Geom
+n = 50000
+exp_rv <- rexp(n, rate = 1)
+geom_rv <- rgeom(n, 0.63212)
+
+# Draw two plots next to each other
+par(mfrow = c(1, 2))
+
+# Draw the histogram
+#hist_(exp_rv, main = "Unif. Distribution")
+
+# Draw the Q-Q plot
+qqplot(exp_rv, geom_rv, main = "Q-Q Plot")
+abline(a = 0, b = 1, col = "blue", lwd = 2)
