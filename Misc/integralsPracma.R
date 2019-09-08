@@ -105,6 +105,13 @@ xmax <- Inf
 
 integral(f13, xmin, xmax)
 
+#14
+f14 <- function(x) x*((0.5/sqrt(2*pi))*exp(-(x-2)^2/2) - (0.5/sqrt(2*pi))*exp(-(x+2)^2/2))
+xmin <- -Inf
+xmax <- Inf
+
+integral(f14, xmin, xmax)
+
 # 3D plot
 library(plot3D)
 library(utils)
